@@ -1,0 +1,75 @@
+<style>
+pre {
+color: #000;
+background-color: #fbedbb;
+padding: 6px;
+font: 9pt Consolas,"Courier New",Courier,mono;
+white-space: pre;
+overflow: auto!important;
+border: solid 1px #fbedbb;
+}
+h2 {
+font-size: 30px;
+font-weight: 200;
+margin: 20px 0 11px;
+padding: 0;
+padding-bottom: 10px;
+color: #333;
+}
+body, p, li, tr, td, th, dd, dt {
+font-family: "Segoe UI",Arial,Sans-Serif;
+font-size: 14px;
+line-height: normal;
+color: #111;
+}
+user agent stylesheetp {
+display: block;
+-webkit-margin-before: 1em;
+-webkit-margin-after: 1em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+}
+</style>
+<div class="article" style="width:auto;margin:10px;padding:10px">
+<form name="aspnetForm" method="post" action="/Tips/721795/Store-your-form-data-in-Google-Spreadsheet" id="aspnetForm" style="margin:0;padding:0">
+<div id="contentdiv" class="text" itemprop="articleBody">
+<h2>Introduction&nbsp;</h2><p>HTML &lt;form&gt; tag is available from the beginning of the Internet. It is used on web pages to collect data from the users. After clicking Submit button, form data is sent to server which usually stores them in one of the database. While use of &lt;form&gt; tag is easy, server side part can be sometimes challenging to set up and operate. In this article I wil show how we can use Google Docs Forms and Google Docs Spreadsheets as our 'database' for saving user inputs.&nbsp;<br>
+	</p><h2>Using the code&nbsp;</h2><p>To use Google Forms and Spreadsheets as &nbsp;your server 'database' you will need to complete some easy steps. Google account is required to complete this tasks.</p><p>1. Go to docs.google.com and create new form. In my sample I have created form with the following fields: Email, Firstname, LastName and Company. To keep this simple, I've set all fields to type text and without any validation rules.</p><p><img src="CreateForm.JPG" align="baseline" border="0" hspace="0" vspace="0">&nbsp;</p><p>&nbsp;2. Click 'View Live Form' button and check the source of the form that is shown. As the source might not be very easy to read and understand you will have to find several information. First one is the form post URL. Search for '&lt;form action' and mind URL&nbsp;&nbsp;in action value:</p><pre lang="html" id="pre0" style="margin-top: 0px;"><span class="code-keyword">&lt;</span><span class="code-leadattribute">form</span> <span class="code-attribute">action</span><span class="code-keyword">="</span><span class="code-keyword"><strong>https://docs.google.com/forms/d/1PTIFxKDZBqKdrkGAgrsa28wus8FyP6XrMTWzabRuC18/formResponse</strong>"</span> <span class="code-attribute">method</span><span class="code-keyword">="</span><span class="code-keyword">POST"</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">ss-form"</span> <span class="code-attribute">target</span><span class="code-keyword">="</span><span class="code-keyword">_self"</span> <span class="code-attribute">onsubmit</span><span class="code-keyword">="</span><span class="code-keyword">"</span><span class="code-keyword">&gt;</span><span class="code-keyword">&lt;</span><span class="code-leadattribute">ol</span> <span class="code-attribute">style</span><span class="code-keyword">="</span><span class="code-keyword">padding-left: 0"</span><span class="code-keyword">&gt;</span> </pre><p>3. Find the unique names of each field. In my case, we have four different form fields. Look for the field name and mind for &lt;input&gt; tags. Attribute name is the parameter that we will need. Name value start with the 'entry.' keyword. The name of the email field in my example is entry_1402836733.&nbsp;</p><pre lang="html" id="pre1" style="margin-top: 0px;"><span class="code-keyword">&lt;</span><span class="code-leadattribute">input</span> <span class="code-attribute">type</span><span class="code-keyword">="</span><span class="code-keyword">text"</span> <span class="code-attribute">name</span><span class="code-keyword">="</span><span class="code-keyword"><strong>entry.1402836733</strong>"</span> <span class="code-attribute">value</span><span class="code-keyword">="</span><span class="code-keyword">"</span> <span class="code-attribute">class</span><span class="code-keyword">="</span><span class="code-keyword">ss-q-short"</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">entry_1402836733"</span> <span class="code-attribute">dir</span><span class="code-keyword">="</span><span class="code-keyword">auto"</span> <span class="code-attribute">aria-label</span><span class="code-keyword">="</span><span class="code-keyword">Email  "</span> <span class="code-attribute">title</span><span class="code-keyword">="</span><span class="code-keyword">"</span><span class="code-keyword">&gt;</span> </pre><p><span style="color: rgb(136, 18, 128); font-family: monospace; font-size: medium; white-space: pre-wrap;"></span>&nbsp;You will need to find names of all the form field.</p><p>4. This is all the information you need. Now let's make our own form in HTML file. You can put the code below into the &lt;body&gt; tag.&nbsp;</p><pre lang="html" id="pre2" style="margin-top: 0px;"><span class="code-keyword">&lt;</span><span class="code-leadattribute">input</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">Email"</span> <span class="code-attribute">name</span><span class="code-keyword">="</span><span class="code-keyword">Email"</span> <span class="code-attribute">type</span><span class="code-keyword">="</span><span class="code-keyword">text"</span>  <span class="code-attribute">placeholder</span><span class="code-keyword">="</span><span class="code-keyword">Email Address"</span><span class="code-keyword">&gt;</span>
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">input</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">First"</span> <span class="code-attribute">name</span><span class="code-keyword">="</span><span class="code-keyword">First"</span> <span class="code-attribute">type</span><span class="code-keyword">="</span><span class="code-keyword">text"</span>  <span class="code-attribute">placeholder</span><span class="code-keyword">="</span><span class="code-keyword">First Name"</span><span class="code-keyword">&gt;</span>
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">input</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">Last"</span> <span class="code-attribute">name</span><span class="code-keyword">="</span><span class="code-keyword">Last"</span> <span class="code-attribute">type</span><span class="code-keyword">="</span><span class="code-keyword">text"</span>  <span class="code-attribute">placeholder</span><span class="code-keyword">="</span><span class="code-keyword">Last Name"</span><span class="code-keyword">&gt;</span>
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">input</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">Company"</span> <span class="code-attribute">name</span><span class="code-keyword">="</span><span class="code-keyword">Company"</span> <span class="code-attribute">type</span><span class="code-keyword">="</span><span class="code-keyword">text"</span> <span class="code-attribute">placeholder</span><span class="code-keyword">="</span><span class="code-keyword">Company"</span><span class="code-keyword">&gt;</span>
+<span class="code-keyword">&lt;</span><span class="code-leadattribute">button</span> <span class="code-attribute">id</span><span class="code-keyword">="</span><span class="code-keyword">ButtonSubmit"</span> <span class="code-attribute">onclick</span><span class="code-keyword">="</span><span class="code-keyword">postContactToGoogle()"</span> <span class="code-attribute">type</span><span class="code-keyword">="</span><span class="code-keyword">button"</span> <span class="code-keyword">&gt;</span>Send<span class="code-keyword">&lt;</span><span class="code-keyword">/</span><span class="code-leadattribute">button</span><span class="code-keyword">&gt;</span> </pre><p>&nbsp;5. In the final step we will create JavaScript function that will post data to Google Form. In order to work you need to reference jQuery.&nbsp;&nbsp;</p><pre lang="jscript" id="pre3" style="margin-top: 0px;">    &lt;script&gt;
+        <span class="code-keyword">function</span> postContactToGoogle() {
+            <span class="code-keyword">var</span> email = $(<span class="code-string">'</span><span class="code-string">#Email'</span>).val();
+            <span class="code-keyword">var</span> first = $(<span class="code-string">'</span><span class="code-string">#First'</span>).val();
+            <span class="code-keyword">var</span> last = $(<span class="code-string">'</span><span class="code-string">#Last'</span>).val();
+            <span class="code-keyword">var</span> company = $(<span class="code-string">'</span><span class="code-string">#Company'</span>).val();
+
+                $.ajax({
+                    url: <span class="code-string">"</span><span class="code-string">https://docs.google.com/forms/d/1PTIFxKDZBqKdrkGAgrsa28wus8FyP6XrMTWzabRuC18/formResponse"</span>,
+                    data: { <span class="code-string">"</span><span class="code-string">entry_1402836733"</span>: email, <span class="code-string">"</span><span class="code-string">entry_1874720748"</span>: first, <span class="code-string">"</span><span class="code-string">entry_2092106103"</span>: last, <span class="code-string">"</span><span class="code-string">entry_944373055"</span>: company },
+                    type: <span class="code-string">"</span><span class="code-string">POST"</span>,
+                    dataType: <span class="code-string">"</span><span class="code-string">xml"</span>,
+                    statusCode: {
+                        <span class="code-digit">0</span>: <span class="code-keyword">function</span> () {
+                            window.location.replace(<span class="code-string">"</span><span class="code-string">ThankYou.html"</span>);
+                        },
+                        <span class="code-digit">200</span>: <span class="code-keyword">function</span> () {
+                            window.location.replace(<span class="code-string">"</span><span class="code-string">ThankYou.html"</span>);
+                        }
+                    }
+                });
+        }
+    <span class="code-keyword">&lt;/</span><span class="code-leadattribute">script</span><span class="code-keyword">&gt;</span>
+</pre><span style="font-size: 9pt;">&nbsp;</span>Code is actually simple once we collected relevant data from Google Form source. First I use jQuery to get user inputs and we store them in local variables. Then I&nbsp;initiate ajax POST call to the URL from Google Form source. URL is called with key-value parameters. After I receive statusCode from server I redirect to browser to another page.&nbsp;<p><span style="color: rgb(51, 51, 51); font-size: 30px;">Points of Interest</span></p><p>
+		I found that Google Forms and Google Spreadsheets can be excellent database foundation form small scale projects and prototypes. Doing data collection this way it is easy to share the responses.<br><br>
+	</p>
+	
+</div>
+						
+
+						
+				    
+					</form>
+
+				</div>
